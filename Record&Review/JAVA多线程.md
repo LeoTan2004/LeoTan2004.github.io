@@ -11,7 +11,6 @@ flowchart LR
 
 1. 通过**继承`Thread`**类来实现多线程创建
 
-   ```java
    class TestThread extends Thread{
        @Override
        public void run(){
@@ -64,8 +63,6 @@ flowchart LR
 | 最大优先级 | 10   | 超出这个会报错                                             |
 | 正常优先级 | 5    | 一般的线程（没有设置优先级的线程）就是这个值，包括main线程 |
 | 最小优先级 | 1    | 低于这个会报错                                             |
-
-![image-20230112172342931](C:\Users\Leo\AppData\Roaming\Typora\typora-user-images\image-20230112172342931.png)
 
 ## 线程的常用函数
 
