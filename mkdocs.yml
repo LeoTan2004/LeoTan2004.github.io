@@ -1,0 +1,91 @@
+#[Info]
+site_name: Leo Tan's Blog   #网站名字
+site_description: the notes record by Leo Tan
+site_author: Leo Tan #作者名
+site_url: https://leotan2004.github.io/  #网站地址
+copyright: Copyright &copy; 2024 leotan2004 # 左下角的版权声明
+
+# [Navigtion]
+nav:
+  - Home: index.md
+  - 课内笔记:
+      - 数学基础:
+          - 素性检测: course/信息安全数学基础/第五章-素性检测.md
+          - 原根与阶: course/信息安全数学基础/第四章《原根与阶》.md
+      - 密码学: course/密码学/分组密码.md
+      - 数字逻辑与电路: course/数字逻辑与电路/数电笔记.md
+      - 计算机组成原理:
+          - 期末复习: course/计组/计算机组成原理.md
+          - 课堂笔记: course/计算机的组成原理.md
+      - 计算机网络: course/计算机网络.md
+  - Java:
+      - Java源码分析: Note/Java源码分析.md
+      - JVM: Note/JVM学习.md
+  - MySQL:
+      - MYSQL: Note/MySql学习.md
+  - C语言: Note/C语言底层运用.md
+  - 代码审计:
+      - FastJSON: 代码审计/FastJson代码审计.md
+  - 随手笔记:
+      - BS4解析HTML: Record&Review/BS4解析HTML.md
+      - Docker: Record&Review/Docker和DockerCompose的使用.md
+      - Java多线程: Record&Review/JAVA多线程.md
+      - Neo4J: Record&Review/Neo4J使用.md
+      - Python集合运算符: Record&Review/Python中的集合运算符.md
+      - SpringCloud: Record&Review/Spring Cloud.md
+      - 数据存储分类: Record&Review/大数据下的数据存储问题.md
+      - 正则表达式: Record&Review/正则表达式.md
+  - 问题复盘:
+      - 猫咪小程序: Record&Review/猫咪小程序.md
+
+#[UI]
+theme:
+  name: material
+  language: zh # 一些提示性的文字会变成中文
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - header.autohide  #自动隐藏
+    #- announce.dismiss #呈现可标记为由用户读取的临时公告，可以包含一个用于取消当前公告的按钮
+    - navigation.instant #自动隐藏
+    - navigation.tracking #地址栏中的 URL 将自动更新为在目录中突出显示的活动锚点
+    - content.code.annotate
+    - toc.integrate
+    - toc.follow
+    - navigation.path
+    - navigation.top # 返回顶部的按钮 在上滑时出现
+    - navigation.tabs
+    - navigation.prune
+    - navigation.footer
+    - navigation.tabs.sticky  #启用粘性选项卡后，导航选项卡将锁定在标题下方，并在向下滚动时始终保持可见
+    - navigation.sections #启用部分后，顶级部分在边栏中呈现为1220px以上视口的组，但在移动设备上保持原样
+    # - navigation.expand # 打开Tab时左侧目录全部展开
+    - content.code.copy
+    - navigation.indexes #启用节索引页后，可以将文档直接附加到节
+    - search.share #搜索分享按钮
+    - search.suggest # 搜索输入一些字母时推荐补全整个单词
+    - search.highlight # 搜索出的文章关键词加入高亮
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default # 日间模式
+      toggle:
+        icon: material/brightness-7  # 图标
+        name: Switch to dark mode
+      primary: deep ## 上方的, [red, pink, purple, deep, purple, indigo, blue, light blue, cyan, teal, green, light green, lime, yellow, amber, orange, deep orange, brown, grey, blue, grey, black, white]
+      accent: deep # # 链接等可交互元件的高亮色 [red, pink, purple, deep, purple, indigo, blue, light, blue, cyan, teal, green, light, green, lime, yellow, amber, orange, deep orange]
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate # 夜间模式
+      primary: deep #, [red, pink, purple, deep, purple, indigo, blue, light blue, cyan, teal, green, light green, lime, yellow, amber, orange, deep orange, brown, grey, blue, grey, black, white]
+      accent: deep # [red, pink, purple, deep, purple, indigo, blue, light, blue, cyan, teal, green, light, green, lime, yellow, amber, orange, deep orange]
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  icon:
+    repo: fontawesome/brands/github #右上角图标
+repo_name: LeoTan2004.github.io # 右上角的名
+repo_url: https://github.com/LeoTan2004/LeoTan2004.github.io.git # 右上角点击跳转的链接

@@ -2,23 +2,25 @@
 
 ### spring cloud中的一些技术和分类
 
-1. 消息队列：
+- 消息队列：
+  - Kafka
+  - RabbitMQ
+  - ActiveMQ
 
-   - Kafka
+- 注册中心：
 
-   - RabbitMQ
+  - Eureka
 
-   - ActiveMQ
+  - Nacos
+
+  - Consul 
+
+  - Zookeeper
+
+  - Dubbo
 
 
-2. 注册中心：
-   - Eureka
-   - Nacos
-   - Consul 
-   - Zookeeper
-   - Dubbo
-
-3. 数据连接池
+- 数据连接池
 
    - C3P0
 
@@ -29,7 +31,7 @@
    - Druid
 
 
-4. 数据持久化
+- 数据持久化
    -  关系型数据库
      - MySql
      - Oracle
@@ -44,14 +46,14 @@
       - JOQO
 
 
-5. 常见安全框架
+- 常见安全框架
 
    - Spring Security
 
    - Shiro
 
 
-6. 常见服务器
+- 常见服务器
 
    - Tomcat
 
@@ -60,18 +62,13 @@
    - Apache（注意区别Tomcat，都是Apache基金会开发的，但Apache是web服务器（静态解析，如HTML），tomcat是java应用服务器，动态解析（如JSP）。Tomcat只是一个servlet(jsp也翻译成servlet)容器，可以认为是apache的扩展，但是可以独立于apache运行
 
 
-7. 页面渲染
+- 页面渲染
 
    - Vue
 
    - thymeleaf
 
    - React
-
-
-8. 日志框架
-
-![v2-97732797f919227ba76169369e697d91_720w-1688476122615-1](Spring Cloud.assets2-97732797f919227ba76169369e697d91_720w-1688476122615-1.webp)
 
 ### Eureka注册中心
 
@@ -740,4 +737,6 @@ spring:
 #### 框架引入
 
 #### 基本配置使用
+
+> 敬请期待
 
