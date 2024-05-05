@@ -35,6 +35,8 @@ nav:
       - SpringCloud: Record&Review/Spring Cloud.md
       - 数据存储分类: Record&Review/大数据下的数据存储问题.md
       - 正则表达式: Record&Review/正则表达式.md
+      - HLS音视频: Record&Review/HLS音视频保存详解.md
+      - YOLOv7部署: Record&Review/YOLOv7模型部署.md
   - 问题复盘:
       - 猫咪小程序: Record&Review/猫咪小程序.md
 
@@ -100,7 +102,7 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - md_in_html
-  - pymdownx.arithmatex:  # latex支持
+  - pymdownx.arithmatex:
       generic: true
   - toc:
       permalink: true # 固定标题位置为当前位置
@@ -113,19 +115,19 @@ markdown_extensions:
   - pymdownx.snippets
   - attr_list
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.superfences # 代码块高亮插件
   - meta # 支持Markdown文件上方自定义标题标签等
   - tables
 
 extra_javascript:
-  - javascripts/extra.js
+#  - javascripts/extra.j
   - javascripts/mathjax.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 extra_css:
-  - stylesheets/extra.css
+#  - stylesheets/extra.css
 
 
 extra:
