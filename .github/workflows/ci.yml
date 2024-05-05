@@ -20,5 +20,9 @@ jobs:
           path: .cache
           restore-keys: |
             mkdocs-material-
-      - run: pip install -i requirements.txt
-      - run: mkdocs gh-deploy --force
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements-ci.txt ]; then pip install -r requirements-ci.txt; fi
+      - name: Deploy Pages
+        run: mkdocs gh-deploy --force
