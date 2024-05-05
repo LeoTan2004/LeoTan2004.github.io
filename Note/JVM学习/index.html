@@ -1,0 +1,1136 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="the notes record by Leo Tan">
+      
+      
+        <meta name="author" content="Leo Tan">
+      
+      
+        <link rel="canonical" href="https://leotan2004.github.io/Note/JVM%E5%AD%A6%E4%B9%A0/">
+      
+      
+        <link rel="prev" href="../Java%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+      
+      
+        <link rel="next" href="../MySql%E5%AD%A6%E4%B9%A0/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.21">
+    
+    
+      
+        <title>JVM - Leo Tan's Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#jvm" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Leo Tan&#39;s Blog" class="md-header__button md-logo" aria-label="Leo Tan's Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Leo Tan's Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              JVM
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep" data-md-color-accent="deep"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/LeoTan2004/LeoTan2004.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LeoTan2004.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../course/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E7%B4%A0%E6%80%A7%E6%A3%80%E6%B5%8B/" class="md-tabs__link">
+          
+  
+    
+  
+  课内笔记
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../Java%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="md-tabs__link">
+          
+  
+    
+  
+  Java
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../MySql%E5%AD%A6%E4%B9%A0/" class="md-tabs__link">
+          
+  
+    
+  
+  MySQL
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../C%E8%AF%AD%E8%A8%80%E5%BA%95%E5%B1%82%E8%BF%90%E7%94%A8/" class="md-tabs__link">
+        
+  
+    
+  
+  C语言
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/FastJson%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="md-tabs__link">
+          
+  
+    
+  
+  代码审计
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Record%26Review/BS4%E8%A7%A3%E6%9E%90HTML/" class="md-tabs__link">
+          
+  
+    
+  
+  随手笔记
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Record%26Review/%E7%8C%AB%E5%92%AA%E5%B0%8F%E7%A8%8B%E5%BA%8F/" class="md-tabs__link">
+          
+  
+    
+  
+  问题复盘
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Leo Tan&#39;s Blog" class="md-nav__button md-logo" aria-label="Leo Tan's Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Leo Tan's Blog
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/LeoTan2004/LeoTan2004.github.io.git" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LeoTan2004.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    
+  
+  
+    <a href="../../course/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E7%AC%AC%E4%BA%94%E7%AB%A0-%E7%B4%A0%E6%80%A7%E6%A3%80%E6%B5%8B/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    课内笔记
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Java
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Java源码分析
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    JVM
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    JVM
+  </span>
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#java" class="md-nav__link">
+    <span class="md-ellipsis">
+      Java面相对象的底层表现形式
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Java面相对象的底层表现形式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#klass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Klass
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../MySql%E5%AD%A6%E4%B9%A0/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MySQL
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../C%E8%AF%AD%E8%A8%80%E5%BA%95%E5%B1%82%E8%BF%90%E7%94%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C语言
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/FastJson%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    代码审计
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../Record%26Review/BS4%E8%A7%A3%E6%9E%90HTML/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    随手笔记
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../Record%26Review/%E7%8C%AB%E5%92%AA%E5%B0%8F%E7%A8%8B%E5%BA%8F/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    问题复盘
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="jvm">JVM学习<a class="headerlink" href="#jvm" title="Permanent link">&para;</a></h1>
+<h2 id="java">Java面相对象的底层表现形式<a class="headerlink" href="#java" title="Permanent link">&para;</a></h2>
+<p><strong>HotSpot</strong>采用<strong><em>oop-Klass</em></strong>模型表示Java的面相对象和类。oop(ordinary object pointer)指普通的对象指针，Klass表示对象的具体类型。</p>
+<h3 id="klass">Klass<a class="headerlink" href="#klass" title="Permanent link">&para;</a></h3>
+<p>Klass类继承MetaDat12a，Klass类的结构如下</p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>_layout_helper</td>
+<td><strong>jint</strong>(<em>int</em>)</td>
+<td>对象布局的总和描述符，如果不是对象或者数组（比如常量池），这个值为0，否则这个值将代表4个组合数，组合数具体有什么含义有子类实现</td>
+</tr>
+<tr>
+<td>_name</td>
+<td>Symbol<em> (char</em>)</td>
+<td>类名</td>
+</tr>
+<tr>
+<td>_primary_supers</td>
+<td>Klass*[]（Klass指针数组）</td>
+<td>表示当前类的父类的继承链，默认长度为8，可以通过<code>-XX:FastSuperclassLimit=5</code>将限制改为5。当超出限度时，超出的部分会放入<strong>_secondary_supers</strong>中。<br/>例如当前类A继承B，B继承C，那么数组中存放的就是{A,B,C}</td>
+</tr>
+<tr>
+<td>_java_mirror</td>
+<td>oop（oopDesc*类型）</td>
+<td>保存当前Klass实例在Java类所对应的java.lang.Class的对象，可以据此访问<strong>静态属性</strong></td>
+</tr>
+<tr>
+<td>_super_check_offset</td>
+<td>juint(unsigned int)</td>
+<td>指向继承链中自己的位置与自己实例的其实地址的偏移量。比如上面的例子中，这个值就是（2+primary_supers偏移量） ， 因为 <strong>primary_supers</strong>[2]中的指正指向的就是A的Klass。<br>当继承链大于8时，他的值就和_<strong>secondary_super_cache</strong>一样</td>
+</tr>
+<tr>
+<td>_secondary_supers</td>
+<td>Array<Klass*>  * <br>(可动态变化的<em>数组指针</em>)</td>
+<td>一般存储Java类实现的接口，偶尔还会存储Java类以及其父类</td>
+</tr>
+<tr>
+<td>_secondary_supers_cache</td>
+<td>Klass*</td>
+<td>保存上一次查询父类的结果</td>
+</tr>
+<tr>
+<td>_super</td>
+<td>Klass*</td>
+<td>指向Java类的直接父类</td>
+</tr>
+<tr>
+<td>_subklass</td>
+<td>Klass*</td>
+<td>指向Java类的直接子类，多个子类会通过_next_sibling连接起来</td>
+</tr>
+<tr>
+<td>_next_sibling</td>
+<td>Klass*</td>
+<td>获取当前类的兄弟子类（二者直接继承同一个父类）</td>
+</tr>
+<tr>
+<td>_next_link</td>
+<td>Klass*</td>
+<td>指向ClassLoader加载的下一个Klass</td>
+</tr>
+<tr>
+<td>_class_loader_data</td>
+<td>ClassLoaderData*</td>
+<td>通过此属性找到加载该Java类的ClassLoader</td>
+</tr>
+<tr>
+<td>_access_flags</td>
+<td>AccessFlags</td>
+<td>权限修饰符，比如private、final、static、abstract、native等</td>
+</tr>
+<tr>
+<td>_prototype_header</td>
+<td>markOop</td>
+<td>和锁的实现有关</td>
+</tr>
+<tr>
+<td>_modified_oops</td>
+<td>jbyte(byte)</td>
+<td>和GC实现有关，可用于YC、CMS</td>
+</tr>
+<tr>
+<td>_accumulated_modified_oops</td>
+<td>jbyte(byte)</td>
+<td>和GC有关，仅用于CMS</td>
+</tr>
+</tbody>
+</table>
+<p><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="857" height="357" viewBox="-0.5 -0.5 857 357" content="&lt;mxfile host=&quot;Electron&quot; modified=&quot;2023-10-23T09:36:33.098Z&quot; agent=&quot;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/20.6.2 Chrome/106.0.5249.199 Electron/21.3.3 Safari/537.36&quot; version=&quot;20.6.2&quot; etag=&quot;BXwI4JaKkmoUrpkhQ7GJ&quot; type=&quot;device&quot;&gt;&lt;diagram id=&quot;XKCQ9xHuUm15ooh5mlrK&quot; name=&quot;第 1 页&quot;&gt;7Zpbc6IwFIB/jY+bIYRweaxot51tp53tzuzuY5RUaJE4MVbZX7+giSRSWtuOg5aaB83JlXP5OER6KJyuvnMyi69ZRNOebUWrHhr0bBvanl98lZJ8I3FhsBFMeBLJTpXgLvlHpdCS0kUS0bnRUTCWimRmCscsy+hYGDLCOVua3e5Zaq46IxNaE9yNSVqX/k4iEUspdIOq4YImk1gu7dvepmFExo8TzhaZXK9nI9tHLpT6mBI1l7zQeUwittQWRcMeCjljYvNrugppWupWqW0z7ryhdbtvTjOxz4A4zx8uLycWv+/T0L24+bni0bdyQDnNE0kXVF3HerciVxoqL3Imu1Eu6Oo5u5CR6m7VN1ZdbuFGlE2p4HnRRU2E5BDpQdCT9WVlDx9LWayZAikhkT4w2c5d6aH4IVXxBrXAmlauqSAREaSmnbUH0HIy2EP9ZZwIejcj47J1WURMIYvFNJXN90mahixlfD0W9UM3tHEhnwvOHqnWMhicQTwsR7BMaPLz4fnZ0CrkjfbQ9f6CyRutgbEFsOtDVYKaLSDEILC0YtdN4yLgIr0cyFDodfelURHvssq4iNmEZSQdVtK+acKqzxVjMyl8oELkEl5kIZhp1rebLyUjmva3BNG6SIYoC5e7f499CxWwBR/TlzpK2hI+oS9N2BC9nKZEJE/m7p4z8HroGeck1zrMWJKJuTbzbSmo3NBBDnCx5mTIYASCoHLRsng7rrRZr3Ks7cbf72t1VP5IyXz+6YmAPBd4loO3xTFMEWCgtRXlqIHhtsGHQv08/1NULFX5W1YAVtXBSm8c5LJ2mlxx9uRKg9cdlivFB0CdK2bqYXvA9vRyeKw4NaxcZnNBsjHtBl4gdoDBD3cnGzxuoHitAgV2ASj4mIHiYtdMRVoHCq4BZb1IN2iCAx/49bBX5ggsExxHjZbg6+Hm3czw92SG80FmfMjAfuOt/zrhnPFuhOwrCYDtu+CZaDvSmIWtxGi38gF1dHzw4H5XQoB2/NV8WrYtM12Qx+cHTQiUvp7hTFgS5oqRqBuoQVYAdFDAt5KmAVWtkMZplTSdOMqA6JhJgz0Q6N64c99sgzT183hFmp/0/pMz5jTzleArXzk4Rdw9KYLbfBhRu9Ri91c+ox06O/AsDCBsOjs4sbj2v7KDg8e1dxJx7dXi+mb00KGwxpZtnsHiE45rpZSv+/UBX4zY93yhlTcjvMAGVv3/9jZfjKifL4RsnfaLW8bSTw8YDzkvnCpACE2+tPV/ZlGt3jbc2L56pRMN/wM=&lt;/diagram&gt;&lt;/mxfile&gt;" style="background-color: rgb(40, 54, 24);"><defs><filter id="dropShadow"><feGaussianBlur in="SourceAlpha" stdDeviation="1.7" result="blur"/><feOffset in="blur" dx="3" dy="3" result="offsetBlur"/><feFlood flood-color="#3D4574" flood-opacity="0.4" result="offsetColor"/><feComposite in="offsetColor" in2="offsetBlur" operator="in" result="offsetBlur"/><feBlend in="SourceGraphic" in2="offsetBlur"/></filter></defs><g filter="url(#dropShadow)"><rect x="550.57" y="0" width="115.91" height="63.64" rx="9.55" ry="9.55" fill="#bc6c25" stroke="#dda15e" pointer-events="none"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 114px; height: 1px; padding-top: 32px; margin-left: 552px;"><div data-drawio-colors="color: #FEFAE0; " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(254, 250, 224); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">Metadata</div></div></div></foreignObject><text x="609" y="35" fill="#FEFAE0" font-family="Helvetica" font-size="12px" text-anchor="middle">Metadata</text></switch></g><path d="M 434.7 95.45 L 434.7 41.8 Q 434.7 31.8 444.7 31.8 L 544.2 31.8" fill="none" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><path d="M 549.45 31.8 L 542.45 35.3 L 544.2 31.8 L 542.45 28.3 Z" fill="#dda15e" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><rect x="376.7" y="95.45" width="115.91" height="63.64" rx="9.55" ry="9.55" fill="#bc6c25" stroke="#dda15e" pointer-events="none"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 114px; height: 1px; padding-top: 127px; margin-left: 378px;"><div data-drawio-colors="color: #FEFAE0; " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(254, 250, 224); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">Klass</div></div></div></foreignObject><text x="435" y="131" fill="#FEFAE0" font-family="Helvetica" font-size="12px" text-anchor="middle">Klass</text></switch></g><path d="M 222.2 175 L 222.2 137.3 Q 222.2 127.3 232.2 127.3 L 370.34 127.27" fill="none" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><path d="M 375.59 127.27 L 368.59 130.77 L 370.34 127.27 L 368.59 123.77 Z" fill="#dda15e" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><rect x="154.55" y="175" width="115.91" height="63.64" rx="9.55" ry="9.55" fill="#bc6c25" stroke="#dda15e" pointer-events="none"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 114px; height: 1px; padding-top: 207px; margin-left: 156px;"><div data-drawio-colors="color: #FEFAE0; " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(254, 250, 224); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">InstanceKlass</div></div></div></foreignObject><text x="213" y="210" fill="#FEFAE0" font-family="Helvetica" font-size="12px" text-anchor="middle">InstanceKlass</text></switch></g><path d="M 656.9 190.91 L 656.9 137.3 Q 656.9 127.3 646.9 127.3 L 498.98 127.27" fill="none" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><path d="M 493.73 127.27 L 500.73 123.77 L 498.98 127.27 L 500.73 130.77 Z" fill="#dda15e" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><rect x="598.86" y="190.91" width="115.91" height="63.64" rx="9.55" ry="9.55" fill="#bc6c25" stroke="#dda15e" pointer-events="none"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 114px; height: 1px; padding-top: 223px; margin-left: 600px;"><div data-drawio-colors="color: #FEFAE0; " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(254, 250, 224); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">ArrayKlass</div></div></div></foreignObject><text x="657" y="226" fill="#FEFAE0" font-family="Helvetica" font-size="12px" text-anchor="middle">ArrayKlass</text></switch></g><path d="M 212.5 286.36 L 212.5 245" fill="none" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><path d="M 212.5 239.75 L 216 246.75 L 212.5 245 L 209 246.75 Z" fill="#dda15e" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><rect x="154.55" y="286.36" width="115.91" height="63.64" rx="9.55" ry="9.55" fill="#bc6c25" stroke="#dda15e" pointer-events="none"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 114px; height: 1px; padding-top: 318px; margin-left: 156px;"><div data-drawio-colors="color: #FEFAE0; " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(254, 250, 224); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">InstanceMirrorKlass</div></div></div></foreignObject><text x="213" y="322" fill="#FEFAE0" font-family="Helvetica" font-size="12px" text-anchor="middle">InstanceMirrorKlass</text></switch></g><path d="M 386.4 286.36 L 386.4 216.8 Q 386.4 206.8 376.4 206.8 L 276.82 206.82" fill="none" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><path d="M 271.57 206.82 L 278.57 203.32 L 276.82 206.82 L 278.57 210.32 Z" fill="#dda15e" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><rect x="309.09" y="286.36" width="154.55" height="63.64" rx="9.55" ry="9.55" fill="#bc6c25" stroke="#dda15e" pointer-events="none"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 153px; height: 1px; padding-top: 318px; margin-left: 310px;"><div data-drawio-colors="color: #FEFAE0; " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(254, 250, 224); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">InstanceClassLoadKlass</div></div></div></foreignObject><text x="386" y="322" fill="#FEFAE0" font-family="Helvetica" font-size="12px" text-anchor="middle">InstanceClassLoadKlass</text></switch></g><path d="M 58 286.36 L 58 216.8 Q 58 206.8 68 206.8 L 148.18 206.82" fill="none" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><path d="M 153.43 206.82 L 146.43 210.32 L 148.18 206.82 L 146.43 203.32 Z" fill="#dda15e" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><rect x="0" y="286.36" width="115.91" height="63.64" rx="9.55" ry="9.55" fill="#bc6c25" stroke="#dda15e" pointer-events="none"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 114px; height: 1px; padding-top: 318px; margin-left: 1px;"><div data-drawio-colors="color: #FEFAE0; " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(254, 250, 224); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">InstanceRefKlass</div></div></div></foreignObject><text x="58" y="322" fill="#FEFAE0" font-family="Helvetica" font-size="12px" text-anchor="middle">InstanceRefKlass</text></switch></g><path d="M 763 286.36 L 763 232.7 Q 763 222.7 753 222.71 L 721.14 222.72" fill="none" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><path d="M 715.89 222.73 L 722.89 219.22 L 721.14 222.72 L 722.89 226.22 Z" fill="#dda15e" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><rect x="705.11" y="286.36" width="115.91" height="63.64" rx="9.55" ry="9.55" fill="#bc6c25" stroke="#dda15e" pointer-events="none"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 114px; height: 1px; padding-top: 318px; margin-left: 706px;"><div data-drawio-colors="color: #FEFAE0; " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(254, 250, 224); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">TypeArrayKlass</div></div></div></foreignObject><text x="763" y="322" fill="#FEFAE0" font-family="Helvetica" font-size="12px" text-anchor="middle">TypeArrayKlass</text></switch></g><path d="M 560.3 286.36 L 560.3 232.7 Q 560.3 222.7 570.3 222.71 L 592.5 222.72" fill="none" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><path d="M 597.75 222.73 L 590.74 226.22 L 592.5 222.72 L 590.75 219.22 Z" fill="#dda15e" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><rect x="502.27" y="286.36" width="115.91" height="63.64" rx="9.55" ry="9.55" fill="#bc6c25" stroke="#dda15e" pointer-events="none"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 114px; height: 1px; padding-top: 318px; margin-left: 503px;"><div data-drawio-colors="color: #FEFAE0; " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(254, 250, 224); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">ObjArrayKlass</div></div></div></foreignObject><text x="560" y="322" fill="#FEFAE0" font-family="Helvetica" font-size="12px" text-anchor="middle">ObjArrayKlass</text></switch></g><path d="M 792 111.36 L 792 41.8 Q 792 31.8 782 31.8 L 672.85 31.82" fill="none" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><path d="M 667.6 31.82 L 674.59 28.32 L 672.85 31.82 L 674.6 35.32 Z" fill="#dda15e" stroke="#dda15e" stroke-miterlimit="10" pointer-events="none"/><rect x="734.09" y="111.36" width="115.91" height="63.64" rx="9.55" ry="9.55" fill="#bc6c25" stroke="#dda15e" pointer-events="none"/><g transform="translate(-0.5 -0.5)"><switch><foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 114px; height: 1px; padding-top: 143px; margin-left: 735px;"><div data-drawio-colors="color: #FEFAE0; " style="box-sizing: border-box; font-size: 0px; text-align: center;"><div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(254, 250, 224); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">ConstantPool</div></div></div></foreignObject><text x="792" y="147" fill="#FEFAE0" font-family="Helvetica" font-size="12px" text-anchor="middle">ConstantPool</text></switch></g></g><switch><g requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"/><a transform="translate(0,-5)" xlink:href="https://www.diagrams.net/doc/faq/svg-export-text-problems" target="_blank"><text text-anchor="middle" font-size="10px" x="50%" y="100%">Text is not SVG - cannot display</text></a></switch></svg></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../Java%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Java源码分析">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                Java源码分析
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../MySql%E5%AD%A6%E4%B9%A0/" class="md-footer__link md-footer__link--next" aria-label="下一页: MYSQL">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                MYSQL
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 leotan2004
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["header.autohide", "navigation.instant", "navigation.tracking", "content.code.annotate", "toc.integrate", "toc.follow", "navigation.path", "navigation.top", "navigation.tabs", "navigation.prune", "navigation.footer", "navigation.tabs.sticky", "navigation.sections", "content.code.copy", "navigation.indexes", "search.share", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a7c05c9e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
